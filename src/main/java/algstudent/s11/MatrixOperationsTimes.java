@@ -1,6 +1,6 @@
-package session1;
+package algstudent.s11;
 
-import session0.MatrixOperations;
+import algstudent.s0.MatrixOperations;
 
 public class MatrixOperationsTimes {
 	public static void main(String[] arg) {

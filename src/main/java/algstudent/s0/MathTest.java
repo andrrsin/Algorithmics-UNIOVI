@@ -1,4 +1,4 @@
-package session0;
+package algstudent.s0;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
