@@ -2,9 +2,9 @@
 Repository for the Algorithmics course at the School of Computer Engineering of the University of Oviedo
 
 ## Information
-**Student**: Andrés Cadenas Blanco
+**Student**: Andres Cadenas Blanco
 
 **Year**: 2022
 
-**Repository URL**: https://github.com/vicegd/algorithmicsCadenasBlancoAndrésUO282276
+**Repository URL**: https://github.com/vicegd/algorithmicsCadenasBlancoAndresUO282276
 
