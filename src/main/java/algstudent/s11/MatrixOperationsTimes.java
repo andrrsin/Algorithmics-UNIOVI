@@ -8,12 +8,12 @@ public class MatrixOperationsTimes {
 	public static void main(String[] arg) {
 		int repetitions = Integer.valueOf(arg[0]);
 
-		//timeOfSumDiagonal1(repetitions);
-		timeOfSumDiagonal2(repetitions);
+		timeOfSumDiagonal1(repetitions);
+		//timeOfSumDiagonal2(repetitions);
 
 	}
 
-	private static void timeOfSumDiagonal1(int repetitions) {
+	public static void timeOfSumDiagonal1(int repetitions) {
 		String filename = Paths.get("").toAbsolutePath().toString()+"/src/main/java/algstudent/s0/data/matrix01.txt";
 		MatrixOperations mat = new MatrixOperations(filename);
 		/*

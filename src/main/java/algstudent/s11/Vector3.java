@@ -1,4 +1,4 @@
-package algstudent.s11;
+	package algstudent.s11;
 
 public class Vector3 {
 	static int[] v;
