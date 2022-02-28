@@ -14,11 +14,13 @@ public class QuicksortCentralElement extends Vector {
 		if(left < right) {
 			int i  = left;
 			int j = right-1;
-			int center = elements[(left - right)/2];
+			int center = elements[(right-left)/2];
+			
 			/*
 			 * the moment the subarray is less than 3 they are ordered.
 			 */
 			if(left-right >= 3) {
+				
 				Util.interchange(elements, right, center);//hide the pivot
 				do {
 					while(elements[i] <= center && i <right)
