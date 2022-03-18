@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-
 public class Parser {
 
 	public static Country[] loadCountries(String countriesPath) {
@@ -22,23 +21,24 @@ public class Parser {
 				data = line.split(":");
 				aux.add(new Country(data[0].trim()));
 			}
-			
+			reader.close();
+			reader = new BufferedReader(new FileReader(countriesPath));
 			Country curr = null;
 			while (reader.ready()) {
 				line = reader.readLine();
 				data = line.split(":");
-				for(Country country: aux)
-					if(country.getName().equals(data[0].trim()))
+				for (Country country : aux)
+					if (country.getName().equals(data[0].trim()))
 						curr = country;
-				for(String name:data[1].split(",")) {
-					for(Country country:aux) {
-						if(name.trim().equals(country.getName())) {
+				for (String name : data[1].split(",")) {
+					for (Country country : aux) {
+						if (name.trim().equals(country.getName())) {
 							curr.addFrontier(country);
 						}
 					}
 				}
 			}
-			
+
 			reader.close();
 
 		} catch (FileNotFoundException e) {
@@ -47,7 +47,9 @@ public class Parser {
 
 			e.printStackTrace();
 		}
-		return (Country[]) aux.toArray();
+		Country[] sol = new Country[aux.size()];
+
+		return aux.toArray(sol);
 	}
 
 	public static String[] loadColors(String colorsPath) {
@@ -57,7 +59,7 @@ public class Parser {
 			reader = new BufferedReader(new FileReader(colorsPath));
 
 			while (reader.ready())
-				aux.add(reader.readLine());
+				aux.add(reader.readLine().trim());
 			reader.close();
 
 		} catch (FileNotFoundException e) {
@@ -66,7 +68,9 @@ public class Parser {
 
 			e.printStackTrace();
 		}
-		return (String[]) aux.toArray();
+		String[] sol = new String[aux.size()];
+
+		return aux.toArray(sol);
 	}
 
 }

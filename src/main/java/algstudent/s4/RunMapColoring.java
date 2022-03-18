@@ -6,6 +6,9 @@ public class RunMapColoring {
 		MapColoring mc = new MapColoring();
 		mc.printColors();
 		mc.printCountries();
+		
+		mc.greedyColoring();
+		mc.printCountries();
 
 	}
 
