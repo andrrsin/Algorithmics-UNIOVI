@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -21,16 +20,20 @@ public class Parser {
 			while (reader.ready()) {
 				line = reader.readLine();
 				data = line.split(":");
-				aux.add(new Country(data[0],null));
+				aux.add(new Country(data[0].trim()));
 			}
 			
+			Country curr = null;
 			while (reader.ready()) {
 				line = reader.readLine();
 				data = line.split(":");
+				for(Country country: aux)
+					if(country.getName().equals(data[0].trim()))
+						curr = country;
 				for(String name:data[1].split(",")) {
 					for(Country country:aux) {
 						if(name.trim().equals(country.getName())) {
-							
+							curr.addFrontier(country);
 						}
 					}
 				}
@@ -44,7 +47,7 @@ public class Parser {
 
 			e.printStackTrace();
 		}
-		return (String[]) aux.toArray();
+		return (Country[]) aux.toArray();
 	}
 
 	public static String[] loadColors(String colorsPath) {
