@@ -8,6 +8,7 @@ public class RunMapColoring {
 		mc.printCountries();
 		
 		mc.greedyColoring();
+		System.out.println("---------------------------------------------");
 		mc.printCountries();
 
 	}

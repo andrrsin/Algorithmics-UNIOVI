@@ -12,16 +12,16 @@ public class MapColoring {
 		setColors(Parser.loadColors(colorsPath));
 		setCountries(Parser.loadCountries(countriesPath));
 	}
-	
+
 	public MapColoring() {
 		setColors(Parser.loadColors(COLORS_PATH));
 		setCountries(Parser.loadCountries(COUNTRIES_PATH));
 	}
-	
+
 	public void printColors() {
 		System.out.println("Colors: ");
-		for(String color: colors)
-			System.out.print(color+", ");
+		for (String color : colors)
+			System.out.print(color + ", ");
 		System.out.println();
 	}
 
@@ -40,31 +40,38 @@ public class MapColoring {
 	public void setColors(String[] colors) {
 		this.colors = colors;
 	}
+
 	public void printCountries() {
-		for(Country country:countries)
+		for (Country country : countries)
 			System.out.println(country.toString());
 	}
+
 	public void greedyColoring() {
-		countries[0].setColor(colors[0]);
+		
 		ArrayList<String> used = new ArrayList<String>();
-		used.add(colors[0]);
-		String color = "";
-		for(int i = 1;i<countries.length;i++) {
-			color = nextColor(countries[i],used);
-			used.add(color);
-			countries[i].setColor(color);
-			
+
+		for (int i = 0; i < countries.length; i++) {
+					
+			used = new ArrayList<String>();
+			for (int j = 0; j < countries[i].getFrontiers().size(); j++) {
+				if(countries[i].getFrontiers().get(j).getColor() != null 
+						&& !countries[i].getFrontiers().get(j).getColor().equals(countries[i].getColor()))
+					used.add(countries[i].getFrontiers().get(j).getColor());
+			}
+			setColor(used, countries[i]);
+
 		}
-			
+
 	}
 
-	private String nextColor(Country country, ArrayList<String> used) {
-		for(String color:colors) {
-			if(!used.contains(color)) {
-				return color;
+	private void setColor(ArrayList<String> used, Country country) {
+		for(int i = 0;i<colors.length;i++) {
+			if(!used.contains(colors[i])) {
+				country.setColor(colors[i]);
+				break;
 			}
 		}
-		return "";
+		
 	}
 
 }
