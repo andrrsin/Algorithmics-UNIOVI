@@ -8,19 +8,30 @@ public class LevenshteinDistance {
 	public LevenshteinDistance(String str1, String str2) {
 		this.str1 = str1.toCharArray();
 		this.str2 = str2.toCharArray();
-
+		this.mat = new int[str2.length() + 1][str1.length() + 1];
 	}
 
 	public int levenshtein() {
-		if (mat == null)
-			createTable();
-		return mat[str1.length][str1.length];
+		for (int i = 0; i < mat.length; i++) {
+			mat[i][0]=i;
+		}
+
+		for (int i = 0; i < mat[0].length; i++) {
+			mat[0][i]=i;
+		}
+		for(int i = 1; i<mat.length;i++) {
+			for(int j = 1;j<mat[0].length;j++) {
+				if (str2[i-1] == str1[j-1]) 
+					mat[i][j]=mat[i-1][j-1];
+				else
+					mat[i][j] = 1+ Math.min(mat[i-1][j-1],Math.min(mat[i][j-1],mat[i-1][j]));
+			}
+		}
+		return mat[str2.length-1][str1.length-1];
 	}
 
 	public void printMatrix() {
-		if (mat == null)
-			createTable();
-
+		
 		System.out.print("  ");
 		for (int i = 0; i < mat.length; i++) {
 			System.out.print(" " + i + " ");
@@ -41,40 +52,5 @@ public class LevenshteinDistance {
 
 	}
 
-	private void createTable() {
-
-		mat = new int[str1.length + 1][str2.length + 1];
-
-		for (int i = 0; i < mat.length; i++) {
-			mat[i][0] = i;
-			mat[0][i] = i;
-		}
-
-		d(str1.length - 1, str2.length - 1);
-
-	}
-
-	private int d(int i, int j) {
-		if (i == 0 || j == 0)
-			return mat[i][j];
-		if (str1[i] == str2[j]) {
-			int aux = d(i - 1, j - 1);
-			mat[i][j] = aux;
-			return aux;
-		} else {
-			int aux = 1 + min(d(i - 1, j - 1), d(i, j - 1), d(i - 1, j));
-			mat[i][j] = aux;
-			return aux;
-		}
-
-	}
-
-	private int min(int a, int b, int c) {
-		if (a >= b && a >= c)
-			return a;
-		if (b >= c && b >= a)
-			return b;
-		return c;
-	}
-
+	
 }
