@@ -33,7 +33,7 @@ public class LevenshteinDistance {
 	public void printMatrix() {
 		
 		System.out.print("  ");
-		for (int i = 0; i < mat.length; i++) {
+		for (int i = 0; i < mat[0].length; i++) {
 			System.out.print(" " + i + " ");
 		}
 

@@ -10,29 +10,21 @@ public class LevenshteinDistanceTest {
 		ld.levenshtein();
 		ld.printMatrix();
 		
+		System.out.println("=====a/a=====");
+		ld = new LevenshteinDistance("a","a");
+		ld.levenshtein();
+		ld.printMatrix();
 		
-//		System.out.println("=====hola/hola=====");
-//		ld = new LevenshteinDistance("hola","hola");
-//		ld.printMatrix();
-//		
-//		System.out.println();
-//		System.out.println("=====abcde/hijkl=====");
-//		ld = new LevenshteinDistance("abcde","hijkl");
-//		ld.printMatrix();
-//		
-//		System.out.println();
-//		System.out.println("=====bacde/abcde=====");
-//		ld = new LevenshteinDistance("bacde","abcde");
-//		ld.printMatrix();
-//		
-//		System.out.println();
-//		System.out.println("=====puerta/porton=====");
-//		ld = new LevenshteinDistance("puerta","porton");
-//		ld.printMatrix();
-//		
+		System.out.println("=====a/ab=====");
+		ld = new LevenshteinDistance("a","ab");
+		ld.levenshtein();
+		ld.printMatrix();
 		
-		
-		
+		System.out.println("=====hola/adios=====");
+		ld = new LevenshteinDistance("hola","adios");
+		ld.levenshtein();
+		ld.printMatrix();
+				
 	}
 
 }
