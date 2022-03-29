@@ -1,4 +1,4 @@
-package s6;
+package algstudent.s6;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;

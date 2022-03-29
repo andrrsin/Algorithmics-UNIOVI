@@ -1,4 +1,4 @@
-package s6;
+package algstudent.s6;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,7 +110,19 @@ public class ImageAverager {
 	 * @n_tries number of random tries     
 	 */
 	public void splitSubsetsGreedy(int n_tries) {	
-		// TODO
+		for(int n = 0; n<n_tries;n++) {
+			Image[] subset1 = new Image[n/2];
+			Image[] subset2 = new Image[n/2];
+			
+			int[] randomIndex = randomIndexes(n);
+			
+			for(int i = 0;i<n/2;i++) {
+				subset1[i] = dataset[randomIndex[i]];
+				subset2[i] = dataset[randomIndex[i]+n/2];
+			}
+			
+			
+		}
 	}
 	
 	/**
