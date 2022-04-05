@@ -61,6 +61,13 @@ public class Image {
 	            this.img[i][j] += img.img[i][j];
 	}
 	
+	//allows to delete the signal (array values) from another image
+		public void deleteSignal(Image img) {
+			for (int i = 0; i < width; i++)
+		        for (int j = 0; j < height; j++)
+		            this.img[i][j] -= img.img[i][j];
+		}
+	
 	//adds additive Gaussian noise with some standard deviation
 	public void addNoise(double noise_std) {
 		Random rand = new Random();
