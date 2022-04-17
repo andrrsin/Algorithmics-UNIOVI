@@ -19,28 +19,55 @@ public class ImageAveragerBench {
 		ImageAverager img_avger;
 		System.out.println(REAL_IMG);
 		// Generating and testing a single dataset instance
-		n_bad = (int) ((PERCENTAGE_BAD / 100.) * N_IMGS);
-		n_real = N_IMGS - n_bad;
-		img_avger = new ImageAverager(REAL_IMG, BAD_IMG, n_real, n_bad, S_NOISE);
+//		n_bad = (int) ((PERCENTAGE_BAD / 100.) * N_IMGS);
+//		n_real = N_IMGS - n_bad;
+//		img_avger = new ImageAverager(REAL_IMG, BAD_IMG, n_real, n_bad, S_NOISE);
 
-		System.out.print("TESTING GREEDY:\n");
-		img_avger.splitSubsetsGreedy(N_IMGS);
-		System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
-		System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
-		img_avger.saveResults(OUT_DIR_G);
-
-		System.out.print("TESTING BACKTRACKING UNBALANCED:\n");
-		img_avger.splitSubsetsBacktracking();
-		System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
-		System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
-		img_avger.saveResults(OUT_DIR_B);
+//		System.out.print("TESTING GREEDY:\n");
+//		img_avger.splitSubsetsGreedy(N_IMGS);
+//		System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
+//		System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
+//		img_avger.saveResults(OUT_DIR_G);
+//
+//		System.out.print("TESTING BACKTRACKING UNBALANCED:\n");
+//		img_avger = new ImageAverager(REAL_IMG, BAD_IMG, n_real, n_bad, S_NOISE);
+//		img_avger.splitSubsetsBacktracking();
+//		System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
+//		System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
+//		img_avger.saveResults(OUT_DIR_B);
+//		
+//		System.out.print("TESTING BACKTRACKING BALANCING:\n");
+//		img_avger = new ImageAverager(REAL_IMG, BAD_IMG, n_real, n_bad, S_NOISE);
+//		img_avger.splitSubsetsBacktracking(1);
+//		System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
+//		System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
+//		img_avger.saveResults(OUT_DIR_B);
 		
-		System.out.print("TESTING BACKTRACKING BALANCING:\n");
-		img_avger.splitSubsetsBacktracking(1);
-		System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
-		System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
-		img_avger.saveResults(OUT_DIR_B);
-
+		long before, after;
+		for(int n = 2; n<Integer.MAX_VALUE;n++) {
+			System.out.println("---------------------------------------------");
+			n_bad = (int) ((PERCENTAGE_BAD / 100.) * n);
+			n_real = n - n_bad;
+			img_avger = new ImageAverager(REAL_IMG, BAD_IMG, n_real, n_bad, S_NOISE);
+			
+			img_avger.splitSubsetsGreedy(n);
+			System.out.println("N: "+n+" ZNCC of greedy: "+ img_avger.zncc()+ " counter: "+img_avger.getCounter());
+			
+			img_avger = new ImageAverager(REAL_IMG, BAD_IMG, n_real, n_bad, S_NOISE);
+			before = System.currentTimeMillis();
+			img_avger.splitSubsetsBacktracking();
+			after = System.currentTimeMillis();
+			System.out.println("N: "+n+" Time:"+(after-before)+" ZNCC of unbalanced: "+ img_avger.zncc()+ " counter: "+img_avger.getCounter());
+			
+			img_avger = new ImageAverager(REAL_IMG, BAD_IMG, n_real, n_bad, S_NOISE);
+			before = System.currentTimeMillis();
+			img_avger.splitSubsetsBacktracking(1);
+			after = System.currentTimeMillis();
+			System.out.println("N: "+n+" Time:"+(after-before)+" ZNCC of balanced: "+ img_avger.zncc()+ " counter: "+img_avger.getCounter());
+			
+			
+		}
+		
 		// Measurements
 		// TODO
 	}

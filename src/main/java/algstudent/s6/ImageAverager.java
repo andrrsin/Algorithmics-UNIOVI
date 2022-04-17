@@ -211,21 +211,21 @@ public class ImageAverager {
 			counter++;
 
 			ngroup1++;
-			if (max_unbalancing <= ngroup1 - ngroup2) {
+			if (max_unbalancing >= ngroup1 - ngroup2) {
 				sol[level] = 1;
-				recBacktrackingUnbalanced(level + 1);
+				recBacktrackingBalanced(level + 1,max_unbalancing);
 			}
 			ngroup1--;
 
 			ngroup2++;
-			if (max_unbalancing <= ngroup2 - ngroup1) {
+			if (max_unbalancing >= ngroup2 - ngroup1) {
 				sol[level] = 2;
-				recBacktrackingUnbalanced(level + 1);
+				recBacktrackingBalanced(level + 1,max_unbalancing);
 			}
 			ngroup2--;
 
 			sol[level] = 0;
-			recBacktrackingUnbalanced(level + 1);
+			recBacktrackingBalanced(level + 1,max_unbalancing);
 		}
 	}
 
