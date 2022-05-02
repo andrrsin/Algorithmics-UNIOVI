@@ -10,6 +10,8 @@ public class ImageAverager {
 	private Image real_img, bad_img; // to store the main good and main bad image
 	private Image avg_img, half1_img, half2_img; // to store the final tests to see if we improve the previous results
 	private Image[] dataset; // dataset to store all the images (good and bad ones)
+	
+
 	private int[] sol; // to store the partial results (where I am putting the pictures? 0->not
 						// assigned, 1->first half, 2->second half
 	private int[] bestSol; // to store the best solution
@@ -18,9 +20,18 @@ public class ImageAverager {
 	private int counter; // to store the number of times we assign an image to half1, half2 or no group
 	private double max_zncc = -1; // to store the best ZNCC
 	private int nImgs;
+	public int[] getSol() {
+		return sol;
+	}
+
+	public int getnImgs() {
+		return nImgs;
+	}
+
 	private Random rand;
 	private int ngroup1 = 0;
 	private int ngroup2 = 0;
+	public double zncc,prev_zncc;
 
 	/**
 	 * Constructor
@@ -76,6 +87,170 @@ public class ImageAverager {
 			else
 				region++;
 		}
+		this.half1_img = new Image(this.width, this.height);
+		this.half2_img = new Image(this.width, this.height);
+	}
+	
+	
+
+	public Image getReal_img() {
+		return real_img;
+	}
+
+	public void setReal_img(Image real_img) {
+		this.real_img = real_img;
+	}
+
+	public Image getBad_img() {
+		return bad_img;
+	}
+
+	public void setBad_img(Image bad_img) {
+		this.bad_img = bad_img;
+	}
+
+	public Image getAvg_img() {
+		return avg_img;
+	}
+
+	public void setAvg_img(Image avg_img) {
+		this.avg_img = avg_img;
+	}
+
+	public Image getHalf1_img() {
+		return half1_img;
+	}
+
+	public void setHalf1_img(Image half1_img) {
+		this.half1_img = half1_img;
+	}
+
+	public Image getHalf2_img() {
+		return half2_img;
+	}
+
+	public void setHalf2_img(Image half2_img) {
+		this.half2_img = half2_img;
+	}
+
+	public Image[] getDataset() {
+		return dataset;
+	}
+
+	public void setDataset(Image[] dataset) {
+		this.dataset = dataset;
+	}
+
+	public int[] getBestSol() {
+		return bestSol;
+	}
+
+	public void setBestSol(int[] bestSol) {
+		this.bestSol = bestSol;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public double getMax_zncc() {
+		return max_zncc;
+	}
+
+	public void setMax_zncc(double max_zncc) {
+		this.max_zncc = max_zncc;
+	}
+
+	public Random getRand() {
+		return rand;
+	}
+
+	public void setRand(Random rand) {
+		this.rand = rand;
+	}
+
+	public int getNgroup1() {
+		return ngroup1;
+	}
+
+	public void setNgroup1(int ngroup1) {
+		this.ngroup1 = ngroup1;
+	}
+
+	public int getNgroup2() {
+		return ngroup2;
+	}
+
+	public void setNgroup2(int ngroup2) {
+		this.ngroup2 = ngroup2;
+	}
+
+	public double getZncc() {
+		return zncc;
+	}
+
+	public void setZncc(double zncc) {
+		this.zncc = zncc;
+	}
+
+	public double getPrev_zncc() {
+		return prev_zncc;
+	}
+
+	public void setPrev_zncc(double prev_zncc) {
+		this.prev_zncc = prev_zncc;
+	}
+
+	public void setSol(int[] sol) {
+		this.sol = sol;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
+	public void setnImgs(int nImgs) {
+		this.nImgs = nImgs;
+	}
+
+	public ImageAverager(ImageAverager manager, int depth, int k) {
+		this.setAvg_img(manager.avg_img);
+		this.setBad_img(manager.bad_img);
+		this.bestSol = manager.bestSol;
+		this.counter = manager.counter;
+		this.dataset = manager.dataset;
+		this.half1_img = manager.half1_img;
+		this.half2_img = manager.half2_img;
+		this.height = manager.height;
+		this.max_zncc = manager.max_zncc;
+		this.ngroup1 = manager.ngroup1;
+		this.ngroup2 = manager.ngroup2;
+		this.nImgs = manager.nImgs;
+		this.prev_zncc = manager.prev_zncc;
+		this.rand = new Random();
+		this.real_img = manager.real_img;
+		this.width = manager.width;
+		this.zncc = manager.zncc();
+
+		
+		this.sol = manager.sol;
+		this.sol[depth] = k;
+		
+//		this.zncc = manager.zncc();
+		
+		
 	}
 
 	/**
@@ -283,6 +458,27 @@ public class ImageAverager {
 			sol[level] = 0;
 			recBacktrackingUnbalanced(level + 1);
 		}
+	}
+
+	public void createResults() {
+		var temp_half1_img = new Image(this.width, this.height);
+		var temp_half2_img = new Image(this.width, this.height);
+		for (int i = 0; i < nImgs; i++) {
+
+			if (sol[i] == 1) {
+				temp_half1_img.addSignal(this.dataset[i]);
+			} else if (sol[i] == 2) {
+				temp_half2_img.addSignal(this.dataset[i]);
+			}
+		}
+		this.avg_img = new Image(this.width, this.height);
+		this.half1_img = temp_half1_img;
+		this.half2_img = temp_half2_img;
+		this.zncc = zncc();
+		this.avg_img.addSignal(this.half1_img);
+		this.avg_img.addSignal(this.half2_img);
+		this.bestSol = sol;
+		
 	}
 
 }
