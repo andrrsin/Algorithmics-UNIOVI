@@ -1,4 +1,4 @@
-package algstudent.s5;
+package algstudent.test;
 
 public class LevenshteinDistanceTest {
 
@@ -9,6 +9,7 @@ public class LevenshteinDistanceTest {
 		LevenshteinDistance ld = new LevenshteinDistance("BARCAZAS","ABRACADABRA");
 		ld.levenshtein();
 		ld.printMatrix();
+		ld.traceBack();
 		
 //		System.out.println("=====a/a=====");
 //		ld = new LevenshteinDistance("a","a");
